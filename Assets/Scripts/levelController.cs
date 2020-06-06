@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,11 +9,11 @@ public class level
 {
 #if UNITY_EDITOR
     public string Name;
+#endif
     public int levelNumber;
     public int tasksOnLevel;
     public int propsOnTaskCount;
     public List<prop> propsOnLevel;
-#endif
 }
 
 [System.Serializable]
@@ -182,9 +181,25 @@ public class levelController : MonoBehaviour
         winPanel.SetActive(true);
     }
 
-    private void clearTask()
+    public void nextLevel()
     {
+        if (_propsOnTask.Count > 0)
+        {
+            _propsOnTask.Clear();
+        }
+
+        if (_tasksStatusObjects.Count > 0)
+        {
+            _tasksStatusObjects.Clear();
+        }
         
+        foreach (Transform child in taskStatusSpot.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        currentLevelIndex++;
+        _currentLevel = levelsList.getLevel(currentLevelIndex);
+        loadLevel();
+        winPanel.SetActive(false);
     }
 
     private void nextTask()
