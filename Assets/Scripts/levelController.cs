@@ -50,6 +50,8 @@ public class levelController : MonoBehaviour
     public GameObject taskStatusPrefab;
     public int currentLevelIndex;
     public levelsList levelsList;
+    public Color taskStatusColorWin;
+    public Color taskStatusColorLose;
     
     [Header("Debug")]
     public level _currentLevel;
@@ -214,7 +216,7 @@ public class levelController : MonoBehaviour
 
     private void winTask()
     {
-        _tasksStatusObjects[_taskCurrentNumber].GetComponent<Image>().color = Color.green;
+        _tasksStatusObjects[_taskCurrentNumber].GetComponent<Image>().color = taskStatusColorWin;
         if (_taskCurrentNumber < _tasksStatusObjects.Count - 1)
         {
             nextTask();
@@ -229,7 +231,7 @@ public class levelController : MonoBehaviour
     private void loseTask()
     {
         _loseTasksOnLevel++;
-        _tasksStatusObjects[_taskCurrentNumber].GetComponent<Image>().color = Color.red;
+        _tasksStatusObjects[_taskCurrentNumber].GetComponent<Image>().color = taskStatusColorLose;
         if (_loseTasksOnLevel == 2)
         {
             lose();
