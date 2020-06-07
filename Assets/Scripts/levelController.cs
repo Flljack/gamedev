@@ -45,6 +45,7 @@ public class levelController : MonoBehaviour
     public GameObject currentSpot;
     public GameObject levelLabel;
     public GameObject winPanel;
+    public GameObject losePanel;
     public GameObject taskStatusSpot;
     public GameObject taskStatusPrefab;
     public int currentLevelIndex;
@@ -172,7 +173,7 @@ public class levelController : MonoBehaviour
     private void lose()
     {
         Debug.Log("lose");
-        //loadLevel();
+        losePanel.SetActive(true);
     }
 
     private void win()
@@ -268,6 +269,27 @@ public class levelController : MonoBehaviour
     public int getLevelsCount()
     {
         return levelsList.size();
+    }
+
+    public void restartLevel()
+    {
+        if (_propsOnTask.Count > 0)
+        {
+            _propsOnTask.Clear();
+        }
+
+        if (_tasksStatusObjects.Count > 0)
+        {
+            _tasksStatusObjects.Clear();
+        }
+        
+        foreach (Transform child in taskStatusSpot.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        _currentLevel = levelsList.getLevel(currentLevelIndex);
+        loadLevel();
+        winPanel.SetActive(false);
+        losePanel.SetActive(false);
     }
     
 }
