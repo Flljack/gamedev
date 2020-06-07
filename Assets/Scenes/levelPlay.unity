@@ -1730,8 +1730,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -78.91}
-  m_SizeDelta: {x: 131.40833, y: 54.782593}
+  m_AnchoredPosition: {x: 0, y: -80}
+  m_SizeDelta: {x: 70, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1383882237
 MonoBehaviour:
@@ -3250,6 +3250,46 @@ PrefabInstance:
       propertyPath: losePanel
       value: 
       objectReference: {fileID: 1852625474}
+    - target: {fileID: 6564820185559487180, guid: 1b290b4914667014b916189770765dea,
+        type: 3}
+      propertyPath: taskStatusColorWin.r
+      value: 0.14901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564820185559487180, guid: 1b290b4914667014b916189770765dea,
+        type: 3}
+      propertyPath: taskStatusColorWin.g
+      value: 0.87058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564820185559487180, guid: 1b290b4914667014b916189770765dea,
+        type: 3}
+      propertyPath: taskStatusColorWin.b
+      value: 0.5058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564820185559487180, guid: 1b290b4914667014b916189770765dea,
+        type: 3}
+      propertyPath: taskStatusColorWin.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564820185559487180, guid: 1b290b4914667014b916189770765dea,
+        type: 3}
+      propertyPath: taskStatusColorLose.r
+      value: 0.9098039
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564820185559487180, guid: 1b290b4914667014b916189770765dea,
+        type: 3}
+      propertyPath: taskStatusColorLose.g
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564820185559487180, guid: 1b290b4914667014b916189770765dea,
+        type: 3}
+      propertyPath: taskStatusColorLose.b
+      value: 0.29411766
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564820185559487180, guid: 1b290b4914667014b916189770765dea,
+        type: 3}
+      propertyPath: taskStatusColorLose.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6564820185559487181, guid: 1b290b4914667014b916189770765dea,
         type: 3}
       propertyPath: m_LocalPosition.x
