@@ -46,6 +46,7 @@ public class levelController : MonoBehaviour
     public GameObject levelLabel;
     public GameObject winPanel;
     public GameObject losePanel;
+    public GameObject pausePanel;
     public GameObject taskStatusSpot;
     public GameObject taskStatusPrefab;
     public int currentLevelIndex;
@@ -62,6 +63,7 @@ public class levelController : MonoBehaviour
     public List<prop> _propsOnTask = new List<prop>();
     public Sprite _rightSilhouette;
     public RuntimePlatform _platform;
+    public bool _pauseEnable;
 
     // Start is called before the first frame update
     private void Start()
@@ -83,6 +85,7 @@ public class levelController : MonoBehaviour
         _propsOnLevel = _currentLevel.propsOnLevel;
         _taskCurrentNumber = 0;
         _loseTasksOnLevel = 0;
+        _pauseEnable = pausePanel.activeInHierarchy;
         shuffle(_propsOnLevel);
         generateTasksStatusOnLevel(_currentLevel.tasksOnLevel);
         generatePropsOnHiddenSpots(_propsOnLevel, _currentLevel.propsOnTaskCount);
@@ -131,21 +134,24 @@ public class levelController : MonoBehaviour
         
     private void Update()
     {
-        if (_platform == RuntimePlatform.Android || _platform == RuntimePlatform.IPhonePlayer)
+        if (!_pauseEnable)
         {
-            if (Input.touchCount > 0)
+            if (_platform == RuntimePlatform.Android || _platform == RuntimePlatform.IPhonePlayer)
             {
-                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                if (Input.touchCount > 0)
                 {
-                    checkTouch(Input.GetTouch(0).position);
+                    if (Input.GetTouch(0).phase == TouchPhase.Began)
+                    {
+                        checkTouch(Input.GetTouch(0).position);
+                    }
                 }
             }
-        }
-        else if (_platform == RuntimePlatform.WindowsEditor)
-        {
-            if (Input.GetMouseButtonDown(0))
+            else if (_platform == RuntimePlatform.WindowsEditor)
             {
-                checkTouch(Input.mousePosition);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    checkTouch(Input.mousePosition);
+                }
             }
         }
     }
@@ -292,6 +298,12 @@ public class levelController : MonoBehaviour
         loadLevel();
         winPanel.SetActive(false);
         losePanel.SetActive(false);
+    }
+
+    public void pausePanelToggle()
+    {
+        pausePanel.SetActive(!pausePanel.activeInHierarchy);
+        _pauseEnable = pausePanel.activeInHierarchy;
     }
     
 }
