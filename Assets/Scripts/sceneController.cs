@@ -9,4 +9,11 @@ public class sceneController : MonoBehaviour
     {
         SceneManager.LoadScene(index);
     }
+
+    public void loadLevel(int levelIndex)
+    {
+        PlayerPrefs.SetInt("CurrentLevel", levelIndex);
+        SceneManager.LoadScene(1);
+        SceneManager.UnloadScene(2);
+    }
 }

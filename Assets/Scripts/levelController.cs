@@ -14,6 +14,12 @@ public class level
     public int tasksOnLevel;
     public int propsOnTaskCount;
     public List<prop> propsOnLevel;
+    public float hiddenSpotXstart;
+    public float hiddenSpotXspace;
+    public float hiddenSpotYstart;
+    public float hiddenSpotYspace;
+    public int rowsHiddenSpot;
+    public int colsHiddenSpot;
 }
 
 [System.Serializable]
@@ -41,7 +47,9 @@ public class levelsList
 
 public class levelController : MonoBehaviour
 {
-    public GameObject[] hiddenSpot;
+    public List<GameObject> hiddenSpot = new List<GameObject>();
+    public GameObject prefabHiddenSpot;
+    public GameObject parentHiddenSpot;
     public GameObject currentSpot;
     public GameObject levelLabel;
     public GameObject winPanel;
@@ -53,7 +61,7 @@ public class levelController : MonoBehaviour
     public levelsList levelsList;
     public Color taskStatusColorWin;
     public Color taskStatusColorLose;
-    
+
     [Header("Debug")]
     public level _currentLevel;
     public List<GameObject> _tasksStatusObjects = new List<GameObject>();
@@ -64,10 +72,12 @@ public class levelController : MonoBehaviour
     public Sprite _rightSilhouette;
     public RuntimePlatform _platform;
     public bool _pauseEnable;
+    
 
     // Start is called before the first frame update
     private void Start()
     {
+        loadPrefs();
         Input.simulateMouseWithTouches = true;
         checkPlatform();
         _currentLevel = levelsList.getLevel(currentLevelIndex);
@@ -79,13 +89,49 @@ public class levelController : MonoBehaviour
         _platform  = Application.platform;
     }
 
+    private void initHiddenSpots()
+    {
+        if (hiddenSpot.Count > 0)
+        {
+            hiddenSpot.Clear();
+        }
+        
+        foreach (Transform child in parentHiddenSpot.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        for (var y = 0; y < _currentLevel.colsHiddenSpot; y++)
+        {
+            for (var x = 0; x < _currentLevel.rowsHiddenSpot; x++)
+            {
+                var spawnPos = new Vector3(_currentLevel.hiddenSpotXstart + x * (1 + _currentLevel.hiddenSpotXspace),
+                    _currentLevel.hiddenSpotYstart + y * (1 + _currentLevel.hiddenSpotYspace), 0);
+                var g = Instantiate(prefabHiddenSpot, spawnPos, Quaternion.identity) as GameObject;
+                g.name = x + "/" + y;
+                g.transform.parent = parentHiddenSpot.transform;
+                hiddenSpot.Add(g);
+            }
+        }
+    }
+
+    private void savePrefs()
+    {
+        PlayerPrefs.SetInt("CurrentLevel", currentLevelIndex);
+    }
+
+    private void loadPrefs()
+    {
+        currentLevelIndex = PlayerPrefs.GetInt("CurrentLevel");
+    }
+
     private void loadLevel()
     {
+        savePrefs();
         levelLabel.GetComponent<Text>().text = "Level " + _currentLevel.levelNumber;
         _propsOnLevel = _currentLevel.propsOnLevel;
         _taskCurrentNumber = 0;
         _loseTasksOnLevel = 0;
         _pauseEnable = pausePanel.activeInHierarchy;
+        initHiddenSpots();
         shuffle(_propsOnLevel);
         generateTasksStatusOnLevel(_currentLevel.tasksOnLevel);
         generatePropsOnHiddenSpots(_propsOnLevel, _currentLevel.propsOnTaskCount);
