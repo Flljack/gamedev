@@ -55,6 +55,7 @@ public class levelController : MonoBehaviour
     public GameObject winPanel;
     public GameObject losePanel;
     public GameObject pausePanel;
+    public GameObject gameOverPanel;
     public GameObject taskStatusSpot;
     public GameObject taskStatusPrefab;
     public int currentLevelIndex;
@@ -233,7 +234,15 @@ public class levelController : MonoBehaviour
     private void win()
     {
         Debug.Log("Win");
-        winPanel.SetActive(true);
+        if (currentLevelIndex < levelsList.size() - 1)
+        {
+            winPanel.SetActive(true);
+        }
+        else
+        {
+           gameOverPanel.SetActive(true);
+        }
+        
     }
 
     public void nextLevel()
