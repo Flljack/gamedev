@@ -126,6 +126,7 @@ public class levelController : MonoBehaviour
 
     private void loadLevel()
     {
+        _pauseEnable = false;
         savePrefs();
         levelLabel.GetComponent<Text>().text = "Level " + _currentLevel.levelNumber;
         _propsOnLevel = _currentLevel.propsOnLevel;
@@ -229,10 +230,12 @@ public class levelController : MonoBehaviour
     {
         Debug.Log("lose");
         losePanel.SetActive(true);
+        _pauseEnable = true;
     }
 
     private void win()
     {
+        _pauseEnable = true;
         Debug.Log("Win");
         if (currentLevelIndex < levelsList.size() - 1)
         {
