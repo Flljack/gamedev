@@ -14,6 +14,6 @@ public class sceneController : MonoBehaviour
     {
         PlayerPrefs.SetInt("CurrentLevel", levelIndex);
         SceneManager.LoadScene(1);
-        SceneManager.UnloadScene(2);
+        SceneManager.UnloadSceneAsync(2);
     }
 }
